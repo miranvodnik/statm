@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stat_adapter_root
+	xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+ 	xsi:noNamespaceSchemaLocation="stat_adapter.xsd">
+	<stat_adapter>
+		<nodeid>2000</nodeid>
+		<adapter_id>1</adapter_id>
+		<stat_dir_name>/var/volatile/log/performance/history/</stat_dir_name>
+		<dest_dir_name>/opt/si2000/neroot/files/performance/xml</dest_dir_name>
+		<owner_name>performance</owner_name>
+		<group_name>users</group_name>
+		<dir_permissions>755</dir_permissions>
+		<file_permissions>644</file_permissions>
+	</stat_adapter>
+</stat_adapter_root>
+
+

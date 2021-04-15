@@ -1,0 +1,73 @@
+# . /etc/init.d/it_functions
+# it_set_it_profile
+
+exec >> statmgr.log 2>&1
+# exec >> /dev/null 2>&1
+
+# possible values for STATM_CONFIG are:
+# - xml - load configuration from xml file
+# - db - load configuration from data base
+# - fs - load configuration from directory structure
+export	STATM_CONFIG=fs
+# xml configuration file (STATM_CONFIG=xml)
+export	STATM_XML_CONFIG_FILE_NAME=$PRODUCT_DIR/Config/stat_adapter.xml
+# directory structure (STATM_CONFIG=fs)
+# export STATM_INPUT_DIRECTORY=/var/volatile/log/performance/history/
+export STATM_INPUT_DIRECTORY=$PRODUCT_DIR/statm-input
+export STATM_OUTPUT_DIRECTORY=$PRODUCT_DIR/statm-output
+
+export	STATM_LOGLEVEL=error
+export	STATM_SYSLOG_SOCKET="/var/run/sc_print.statm"
+export	STATM_LOCAL_SOCKET="/var/run/statm.socket"
+export	STATM_WORKING_QUEUE_KEY_PATH="/var/run/statm.mq"
+
+export	STATM_XSD_DATABASE_PATH="/opt/si2000/neroot/xsd-db-stat"
+export	STATM_XML_DATABASE_PATH="/opt/si2000/neroot/xml-db-stat"
+export	STATM_DAT_DATABASE_PATH="/opt/si2000/neroot/xdb-db-stat"
+export	STATM_IGNORE_NODEID=true
+export	STATM_INDEX_ALL=true
+export	STATM_SIGS_SIZE=20
+
+export NODEID=2000
+export STATM_SOLID_CONNECTION_STRING=localhost
+export STATM_SOLID_DB_USERNAME=root
+export STATM_SOLID_DB_PASSWORD=iskratel
+export STATM_SOLID_DB_CATALOG=catalog
+
+# statistical module settings
+export STATM_PRESERVE_STAT_HISTORY=false
+export STATM_GENERATE_STAT_XML=true
+export STATM_STAT_CNTR_INFO=$PRODUCT_DIR/Config/HistoryStatisticsCounters-1.txt
+
+export PATH=$PATH:${PRODUCT_DIR}/bin:.
+
+DESC="PMON STATISTICAL MODULE DAEMON"
+NAME=STATMMGR
+DAEMON_EXE=statm
+
+echo $PATH
+echo $PRODUCT_DIR
+echo $LD_LIBRARY_PATH
+
+case "$1" in
+	start)
+		echo -n `date` "Starting $DESC: "
+		ulimit -c unlimited
+		$DAEMON_EXE admin $*
+		echo "started"
+		cd /
+		;;
+	stop)
+		echo -n `date` "Stopping $DESC: "
+		$DAEMON_EXE admin $*
+		echo "stopped"
+		cd /
+		;;
+	*)
+		N=/etc/init.d/$NAME
+		echo "Usage: $N {start|stop}" >&2
+		exit 1
+	;;
+esac
+
+exit 0

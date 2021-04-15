@@ -1,0 +1,10 @@
+mv XdbdBaseJob.cpp StatmBaseJob.cpp
+mv XdbdBaseJob.h StatmBaseJob.h
+mv XdbdMessageQueue.cpp StatmMessageQueue.cpp
+mv XdbdMessageQueue.h StatmMessageQueue.h
+mv XdbdRunnable.cpp StatmRunnable.cpp
+mv XdbdRunnable.h StatmRunnable.h
+mv XdbdRunningContext.cpp StatmRunningContext.cpp
+mv XdbdRunningContext.h StatmRunningContext.h
+mv XdbdWorkingThread.cpp StatmWorkingThread.cpp
+mv XdbdWorkingThread.h StatmWorkingThread.h

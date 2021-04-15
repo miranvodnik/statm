@@ -1,0 +1,79 @@
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="stat_adapter_root">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="stat_adapter" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="nodeid"  minOccurs="1" maxOccurs="1">
+								<xs:simpleType>
+									<xs:restriction base = "xs:int"/>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="adapter_id"  minOccurs="1" maxOccurs="1">
+								<xs:simpleType>
+									<xs:restriction base = "xs:short"/>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="stat_dir_name"  minOccurs="1" maxOccurs="1">
+								<xs:simpleType>
+									<xs:restriction base = "xs:string">
+											<xs:minLength value="0"/>
+											<xs:maxLength value="256"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="dest_dir_name"  minOccurs="1" maxOccurs="1">
+								<xs:simpleType>
+									<xs:restriction base = "xs:string">
+											<xs:minLength value="0"/>
+											<xs:maxLength value="256"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="owner_name"  minOccurs="1" maxOccurs="1">
+								<xs:simpleType>
+									<xs:restriction base = "xs:string">
+											<xs:minLength value="0"/>
+											<xs:maxLength value="64"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="group_name"  minOccurs="1" maxOccurs="1">
+								<xs:simpleType>
+									<xs:restriction base = "xs:string">
+											<xs:minLength value="0"/>
+											<xs:maxLength value="64"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="dir_permissions" default="755" minOccurs="1" maxOccurs="1">
+								<xs:simpleType>
+									<xs:restriction base = "xs:string">
+											<xs:minLength value="0"/>
+											<xs:maxLength value="16"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="file_permissions" default="644" minOccurs="1" maxOccurs="1">
+								<xs:simpleType>
+									<xs:restriction base = "xs:string">
+											<xs:minLength value="0"/>
+											<xs:maxLength value="16"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="XPKstat_adapter">
+			<xs:selector xpath=".//stat_adapter"/>
+			<xs:field xpath="nodeid"/>
+			<xs:field xpath="adapter_id"/>
+			</xs:key>
+		
+		</xs:element>
+</xs:schema>

@@ -42,7 +42,7 @@ void	StatmMessageQueue::_Initialize ()
 	statmErrReport (SC_STATM, SC_ERR, "CREATE StatmMessageQueue %ld", this);
 #endif
 
-	const char*	wfname = StatmCommon::workingQueueKeyPath().c_str();
+	const char*	wfname = "/var/run/statm.mq";
 	if (access (wfname, F_OK) < 0)
 	{
 		int	fd;

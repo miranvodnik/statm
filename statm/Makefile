@@ -14,7 +14,7 @@ IDIR = -I. \
 	-I/usr/include/libxml2
 CPPFLAGS = $(DEF_FLAGS) $(CPPOPTS) $(IDIR)
 LOPTS = -shared
-LIBS := -lrt -lstatcore -lxdbdodbc -lxdbdapi -lstatmsg -lstatstat -lstatmpx -lstaterrinfo -luuid -lpthread `xml2-config --libs`
+LIBS := -lrt -lstatcore -lxdbdmsg -lxdbderrinfo -lxdbdodbc -lxdbdapi -lstatmsg -lstatstat -lstatmpx -lstaterrinfo -luuid -lpthread `xml2-config --libs`
 LDIR = -L$(PRODUCT_DIR)/lib -L$(PRODUCT_DIR)/../xdbd/lib
 
 OBJS += \

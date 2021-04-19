@@ -69,7 +69,7 @@ public:
 	inline static salist& get_salist () { return g_StatisticalAdapterThread->_get_salist (); }
 	inline static string get_xmlCfgFileName() { return m_xmlCfgFileName; }
 	inline static string get_inputCatalogName() { return m_inputCatalogName; }
-	inline static string get_ouputCatalogName() { return m_outputCatalogName; }
+	inline static string get_outputCatalogName() { return m_outputCatalogName; }
 
 private:
 	void _Init ();

@@ -33,6 +33,7 @@
 /****************************************************************/
 
 string StatisticalAdapterThread::m_xmlCfgFileName = "";
+string StatisticalAdapterThread::m_inputCatalogName = "";
 StatisticalAdapterThread* StatisticalAdapterThread::g_StatisticalAdapterThread = new StatisticalAdapterThread ();
 
 void StatisticalAdapterThread::_Init ()
@@ -636,6 +637,9 @@ int StatisticalAdapterThread::ReadFSSettings()
 		statmErrReport(SC_STATM, SC_ERR, "STATM_OUTPUT_DIRECTORY environment variable is not defined");
 		return -1;
 	}
+
+	m_inputCatalogName = statmIn;
+	m_outputCatalogName = statmOut;
 
 	CheckPath(statmIn, "/\\");
 	CheckPath(statmOut, "/\\");

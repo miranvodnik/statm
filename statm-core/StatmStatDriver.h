@@ -54,6 +54,7 @@ private:
 	int	UnregChgTracker (int wd, void* data);
 	inline static void HandleStatDirChanges(int fd, void* data, struct inotify_event* nevent) { cout << "new STAT request" << endl;  StatmMessageQueue::Put(new StatmChkStatDir(fd, data, nevent)); }
 	inline static void HandleConfigChanges (int fd, void* data, struct inotify_event* nevent) { StatmMessageQueue::Put (new StatmChkConfig (fd, data, nevent));}
+	inline static void HandleInpuCatalogChanges (int fd, void* data, struct inotify_event* nevent) { StatmMessageQueue::Put(new StatmChkConfig(fd, data, nevent)); }
 	inline static chgstruct* GetChgInfo (int fd) { return g_StatmStatDriver->_GetChgInfo(fd); }
 	inline chgstruct* _GetChgInfo (int fd) { return m_chgmap[fd]; }
 
@@ -77,6 +78,7 @@ private:
 	int	m_notify;
 	ctx_fddes_t	m_notifyHandler;
 	int m_cfgNotify;
+	int m_ctgNotify;
 
 	u_char*	m_inputBuffer;
 	u_char*	m_inputPtr;

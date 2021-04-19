@@ -44,6 +44,7 @@ StatmStatDriver::StatmStatDriver ()
 	m_inputPtr = 0;
 	m_inputEnd = 0;
 	m_cfgNotify = 0;
+	m_ctgNotify = 0;
 }
 
 StatmStatDriver::~StatmStatDriver ()
@@ -238,12 +239,18 @@ int StatmStatDriver::_LoadStatFiles (char* statPath)
 {
 	StatisticalAdapterThread::Init();
 
-	string xmlCfgFileName = StatisticalAdapterThread::get_xmlCfgFileName ();
+	string xmlCfgFileName = StatisticalAdapterThread::get_xmlCfgFileName();
 	if (!xmlCfgFileName.empty())
 	{
-		string::size_type position = xmlCfgFileName.rfind ("/");
-		string dirName = xmlCfgFileName.substr (0, position);
-		m_cfgNotify = RegChgTracker ((char*)dirName.c_str(), HandleConfigChanges, (void*) -1);
+		string::size_type position = xmlCfgFileName.rfind("/");
+		string dirName = xmlCfgFileName.substr(0, position);
+		m_cfgNotify = RegChgTracker((char*)dirName.c_str(), HandleConfigChanges, (void*)-1);
+	}
+
+	string inputCatalogName = StatisticalAdapterThread::get_inputCatalogName();
+	if (!inputCatalogName.empty())
+	{
+		m_ctgNotify = RegChgTracker((char*)inputCatalogName.c_str(), HandleInpuCatalogChanges, (void*)-1);
 	}
 
 	salist p_salist = StatisticalAdapterThread::get_salist();
@@ -283,7 +290,9 @@ void StatmStatDriver::_ReleaseStatAdapter ()
 		UnregChgTracker (p_adapter->notifyFD (), p_adapter);
 	}
 	if (m_cfgNotify > 0)
-		UnregChgTracker (m_cfgNotify, (void*) -1);
+		UnregChgTracker(m_cfgNotify, (void*)-1);
+	if (m_ctgNotify > 0)
+		UnregChgTracker(m_ctgNotify, (void*)-1);
 	StatisticalAdapterThread::Release();
 }
 

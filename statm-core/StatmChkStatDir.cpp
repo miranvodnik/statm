@@ -83,10 +83,10 @@ void	StatmChkStatDir::Report ()
 	statmErrReport (SC_STATM, SC_ERR, err_info ("job - checking statistical dir: file = %s"), m_fname.c_str());
 }
 
-StatmChkConfig::StatmChkConfig (int fd, void* data, struct inotify_event* nevent) : StatmBaseJob (StatmBaseJob::Infinite)
+StatmChkConfig::StatmChkConfig(int fd, void* data, struct inotify_event* nevent) : StatmBaseJob(StatmBaseJob::Infinite)
 {
 #if defined(DEBUG)
-	if (g_debug) statmErrReport (SC_STATM, SC_ERR, "CREATE StatmChkConfig (%s)", nevent->name);
+	if (g_debug) statmErrReport(SC_STATM, SC_ERR, "CREATE StatmChkConfig (%s)", nevent->name);
 #endif
 	m_fd = fd;
 	m_ctx = data;
@@ -100,36 +100,79 @@ StatmChkConfig::StatmChkConfig (int fd, void* data, struct inotify_event* nevent
 StatmChkConfig::~StatmChkConfig()
 {
 #if defined(DEBUG)
-	if (g_debug) statmErrReport (SC_STATM, SC_ERR, "DELETE StatmChkConfig (%s)", m_fname.c_str());
+	if (g_debug) statmErrReport(SC_STATM, SC_ERR, "DELETE StatmChkConfig (%s)", m_fname.c_str());
 #endif
 }
 
-int StatmChkConfig::Execute (StatmWorkingThread* wt)
+int StatmChkConfig::Execute(StatmWorkingThread* wt)
 {
 	if ((m_mask & (IN_CLOSE_WRITE | IN_MOVED_TO)) == 0)
 		return	0;
 
-	string xmlCfgFileName = StatisticalAdapterThread::get_xmlCfgFileName ();
-	string::size_type position = xmlCfgFileName.rfind ('/');
-	if (xmlCfgFileName.compare (position + 1, xmlCfgFileName.length() - position, m_fname) != 0)
+	string xmlCfgFileName = StatisticalAdapterThread::get_xmlCfgFileName();
+	string::size_type position = xmlCfgFileName.rfind('/');
+	if (xmlCfgFileName.compare(position + 1, xmlCfgFileName.length() - position, m_fname) != 0)
 		return 0;
 
-	statmErrReport (SC_STATM, SC_ERR, "Reload statistical configuration, file = '%s'", m_fname.c_str());
-	StatmStatDriver::ReleaseStatAdapter ();
-	StatmStatDriver::InitStatAdapter ();
+	statmErrReport(SC_STATM, SC_ERR, "Reload statistical configuration, file = '%s'", m_fname.c_str());
+	StatmStatDriver::ReleaseStatAdapter();
+	StatmStatDriver::InitStatAdapter();
 	return	0;
 }
 
-int StatmChkConfig::Cleanup ()
+int StatmChkConfig::Cleanup()
 {
-	statmErrReport (SC_STATM, SC_ERR, err_info ("Reload statistical configuration job killed, file = %s"), m_fname.c_str());
+	statmErrReport(SC_STATM, SC_ERR, err_info("Reload statistical configuration job killed, file = %s"), m_fname.c_str());
 	delete	this;
 	return	0;
 }
 
-void	StatmChkConfig::Report ()
+void	StatmChkConfig::Report()
 {
-	statmErrReport (SC_STATM, SC_ERR, err_info ("job - reload statistical configuration: file = %s"), m_fname.c_str());
+	statmErrReport(SC_STATM, SC_ERR, err_info("job - reload statistical configuration: file = %s"), m_fname.c_str());
+}
+
+StatmChkInputCatalog::StatmChkInputCatalog(int fd, void* data, struct inotify_event* nevent) : StatmBaseJob(StatmBaseJob::Infinite)
+{
+#if defined(DEBUG)
+	if (g_debug) statmErrReport(SC_STATM, SC_ERR, "CREATE StatmChkInputCatalog (%s)", nevent->name);
+#endif
+	m_fd = fd;
+	m_ctx = data;
+	m_wd = nevent->wd;
+	m_mask = nevent->mask;
+	m_cookie = nevent->cookie;
+	m_len = nevent->len;
+	m_fname = nevent->name;
+}
+
+StatmChkInputCatalog::~StatmChkInputCatalog()
+{
+#if defined(DEBUG)
+	if (g_debug) statmErrReport(SC_STATM, SC_ERR, "DELETE StatmChkInputCatalog (%s)", m_fname.c_str());
+#endif
+}
+
+int StatmChkInputCatalog::Execute(StatmWorkingThread* wt)
+{
+	if ((m_mask & (IN_CLOSE_WRITE | IN_MOVED_TO)) == 0)
+		return	0;
+
+	string inputCatalogName = StatisticalAdapterThread::get_inputCatalogName();
+	string outputCatalogName = StatisticalAdapterThread::get_outputCatalogName();
+	return	0;
+}
+
+int StatmChkInputCatalog::Cleanup()
+{
+	statmErrReport(SC_STATM, SC_ERR, err_info("Statistical Input Catalog Checker job killed, file = %s"), m_fname.c_str());
+	delete	this;
+	return	0;
+}
+
+void	StatmChkInputCatalog::Report()
+{
+	statmErrReport(SC_STATM, SC_ERR, err_info("job - reload statistical configuration: file = %s"), m_fname.c_str());
 }
 
 }

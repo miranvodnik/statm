@@ -67,7 +67,9 @@ public:
 	inline static const char* FetchCounterIms (cntrkey key) { return g_StatisticalAdapterThread->_FetchCounterIms (key); }
 	inline static const char* FetchCounterComment (cntrkey key) { return g_StatisticalAdapterThread->_FetchCounterComment (key); }
 	inline static salist& get_salist () { return g_StatisticalAdapterThread->_get_salist (); }
-	inline static string get_xmlCfgFileName () { return m_xmlCfgFileName; }
+	inline static string get_xmlCfgFileName() { return m_xmlCfgFileName; }
+	inline static string get_inputCatalogName() { return m_inputCatalogName; }
+	inline static string get_ouputCatalogName() { return m_outputCatalogName; }
 
 private:
 	void _Init ();
@@ -88,6 +90,8 @@ private:
 	salist m_salist;
 
 	static string m_xmlCfgFileName;
+	static string m_inputCatalogName;
+	static string m_outputCatalogName;
 };
 
 typedef StatisticalAdapterThread::salist salist;

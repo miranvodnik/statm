@@ -42,7 +42,7 @@ private:
 	string	m_fname;
 };
 
-class StatmChkConfig: public StatmBaseJob
+class StatmChkConfig : public StatmBaseJob
 {
 public:
 	typedef struct
@@ -50,15 +50,39 @@ public:
 		string	m_dirname;
 	}	StatmChkContext;
 public:
-	StatmChkConfig (int fd, void* data, struct inotify_event* nevent);
+	StatmChkConfig(int fd, void* data, struct inotify_event* nevent);
 	virtual ~StatmChkConfig();
-	virtual int Execute (StatmWorkingThread* wt);
-	virtual int Cleanup ();
-	virtual void Report ();
-	virtual int	Invoke (StatmRunningContext* ctx) { return Execute ((StatmWorkingThread*)ctx); }
+	virtual int Execute(StatmWorkingThread* wt);
+	virtual int Cleanup();
+	virtual void Report();
+	virtual int	Invoke(StatmRunningContext* ctx) { return Execute((StatmWorkingThread*)ctx); }
 private:
 	int	m_fd;
-	void*	m_ctx;
+	void* m_ctx;
+	int	m_wd;
+	uint32_t	m_mask;
+	uint32_t	m_cookie;
+	uint32_t	m_len;
+	string	m_fname;
+};
+
+class StatmChkInputCatalog : public StatmBaseJob
+{
+public:
+	typedef struct
+	{
+		string	m_dirname;
+	}	StatmChkContext;
+public:
+	StatmChkInputCatalog(int fd, void* data, struct inotify_event* nevent);
+	virtual ~StatmChkInputCatalog();
+	virtual int Execute(StatmWorkingThread* wt);
+	virtual int Cleanup();
+	virtual void Report();
+	virtual int	Invoke(StatmRunningContext* ctx) { return Execute((StatmWorkingThread*)ctx); }
+private:
+	int	m_fd;
+	void* m_ctx;
 	int	m_wd;
 	uint32_t	m_mask;
 	uint32_t	m_cookie;

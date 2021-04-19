@@ -34,6 +34,7 @@
 
 string StatisticalAdapterThread::m_xmlCfgFileName = "";
 string StatisticalAdapterThread::m_inputCatalogName = "";
+string StatisticalAdapterThread::m_outputCatalogName = "";
 StatisticalAdapterThread* StatisticalAdapterThread::g_StatisticalAdapterThread = new StatisticalAdapterThread ();
 
 void StatisticalAdapterThread::_Init ()
